@@ -1,0 +1,41 @@
+*
+{
+    box-sizing: border-box;
+}
+input::placeholder{
+    color: #000 ;
+    font-size: 20px;
+}
+.form-group input[type=email],input[type=password], .input-group-addon
+{
+    border: none;
+    color: #333;
+    background-color: transparent;
+    border:2px solid #808080;
+}
+.signpanel
+{
+    background: transparent;
+    background-color: #d1d3d6;
+    opacity: 0.9;
+    box-shadow: 1px 1px 5px #eaebed;
+    border:1px solid #808080;
+ }
+.panel-primary>.panel-heading
+{
+    background-color: none;
+    background-color:#1284e8;
+    text-decoration: blink;
+    text-align: center;
+}
+.login_section
+{
+    background: url('../public/images/wallpaper2.jpg') 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    max-width: 100%;
+    height: 160vh;
+    background-position: center;
+    position: relative;
+}
+

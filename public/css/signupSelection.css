@@ -1,0 +1,23 @@
+.signupSelection
+{
+	position: relative;
+	height: 300px;
+	width: 100%;
+	border: 5px solid #ccc;
+	border-radius: 50px;
+}
+.signupSelection a
+{
+	position: absolute;
+	padding: 20px;
+	transform: translate(150px,100px);
+	color: #fff;
+	background-color: #000;
+	border-radius: 10px;
+	font-size: 20px;
+}
+.signupSelection a:hover
+{
+	background-color: #fff;
+	color: #000;
+}

@@ -1,0 +1,104 @@
+
+input::placeholder
+{
+    color: #000 ;
+    font-size:18px;
+}
+.form-group input[type=text],input[type=password], input[type=date],select[name="gender"],select[name="location"],select[name="jobType"],.input-group-addon
+{
+	border: none;
+    color: #333;
+    background-color: transparent;
+    border-bottom:2px solid #808080;
+}
+.form-group p
+{
+    margin-top: 10px;
+}
+.signpanel
+{
+    background: transparent;
+    background-color: #d1d3d6;
+    opacity: 0.9;
+    box-shadow: 1px 1px 5px #eaebed;
+    border:1px solid #808080;
+    padding: 20px;
+}
+.mypanel
+{
+	border:none;
+	width: 45%;
+	margin: 0 auto;
+}
+.gen{
+    color: #b7b9bc;
+}
+#sub{
+    background-color: #2c6596;
+    color: white;
+    padding: 13px 20px 13px 20px;
+    border-radius: 5px;
+    border: 0;
+}
+
+a:hover{
+    text-decoration: none;
+
+}
+a{
+    margin-left: 10px;
+}
+
+#licence,#attachpic{
+    background-color: #2c6596;
+    color: white;
+    margin-top: 5px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 5px;
+    border: 0;
+}
+.gutter-left
+{
+    padding-left: 0;
+}
+.gutter-right
+{
+    padding-right: 0;
+}
+#doc,#pic{
+    display: none;
+}
+#list{
+    position: absolute;
+    z-index: 88;
+    width: 400px;
+    margin: 0;
+
+    display: none;
+    background-color: #eaecef;
+    padding: 20px;
+}
+#list li{
+    list-style: none;
+    padding: 5px 0 5px 0;
+    cursor: pointer;
+    font-weight: lighter;
+    font-size: 16px;
+}
+#logo{
+
+    height: 70px;
+}
+.loc
+{
+    float: left;
+}
+#attach{
+    background-color: #303c51;
+    color: white;
+    padding: 7px 20px 7px 20px;
+    border-radius: 5px;
+    border: 0;
+}
+
+
