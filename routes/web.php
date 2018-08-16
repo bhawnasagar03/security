@@ -142,4 +142,40 @@ Route::GET('admin/search/user','AdminController@searchUser')->name('searchUser')
 
 Route::GET('admin/search/users','AdminController@searchU')->name('searchU');
 
+		//edit guard
+Route::GET('admin/edit/{id}/guard','AdminController@editGuard')->name('editGuard');
+Route::post('admin/update/guard','AdminController@updateGuard')->name('updateGuard');
+
+		//edit user
+Route::GET('admin/edit/user/{id}','AdminController@editUser')->name('editUser');
+Route::post('admin/update/user','AdminController@updateUser')->name('updateUser');
+
+   //guard account deletion
+Route::GET('delete/guard/account/{id}','CurdController@deleteGuardAccount')->name('deleteGuardAccount');
+
+//edit guard
+Route::GET('edit/{id}/guard/profile','CurdController@editGuardProfile')->name('editGuardProfile');
+Route::post('update/guard/profile','CurdController@updateGuardProfile')->name('updateGuardProfile');
+
+		//edit user
+Route::GET('edit/{id}/user/profile','CurdController@editUserProfile')->name('editUserProfile');
+Route::post('update/user/profile','CurdController@updateUserProfile')->name('updateUserProfile');
+
+Route::post('/wishlist','SignupAuthController@userWishlist')->name('wishlist');
+Route::get('/view/wishlist','SignupAuthController@viewWishlist')->name('viewWishlist');
+
+Route::GET('delete/wishlist/{id}','CurdController@deleteWishlist')->name('deleteWishlist');
+
+		// view guard profile
+Route::GET('view/guard/{id}/profile','CurdController@viewGuardProfile')->name('viewGuardProfile');
+
+
+		// Services
+
+Route::get('aboutus','ServiceController@aboutus')->name('aboutus');
+Route::get('service','ServiceController@service')->name('service');
+Route::get('team','ServiceController@team')->name('team');
+Route::get('blog','ServiceController@blog')->name('blog');
+Route::get('contact','ServiceController@contact')->name('contact');
+
 

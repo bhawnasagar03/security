@@ -1,20 +1,15 @@
-// $(document).ready(function(){
+$(document).ready(function(){
 	
-// 	$(".cancelGuard").hide();
-    
-// // for(let i=0; i<=$value.length; i++)
-// // {
-//     $(".bookGuard").click(function(){
-//         alert('sjnfwjn');
-//         this.hide();
-//         //$($(this).(".cancelGuard")).show();
-//        // this.show();
+    $("#navid").click(function(){
+       
+       $(".navbadge").hide();
 
-//     });
-//     $(".cancelGuard").click(function(){
-//         $(".cancelGuard").hide();
-//         $(".bookGuard").show();
-//     });
-// // }
+    });
 
-// });
+    $("#wish").click(function(){
+       
+       $("#wish").hide();
+
+    });
+
+});

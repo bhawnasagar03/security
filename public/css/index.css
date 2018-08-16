@@ -29,6 +29,11 @@
 	width: 99%;
 	margin-left: 5px;
 }
+
+.content{
+	margin: 0 auto;
+	position: relative;
+}
 .triangle-bottomright
 {
 	position: absolute;

@@ -3,7 +3,7 @@
 
 You got a new job offer  .
 
-@component('mail::button', ['url' => URL::route('customerLogin')])
+@component('mail::button', ['url' => URL::route('home')])
 Viwe Order
 @endcomponent
 

@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use Mail;
 use Auth;
 use Session;
 use App\User;
 use App\GuardCancel;
+use App\UserWishlist;
 use App\GuardProfile;
 use App\AddToWishlist;
 use App\PreferedLocation;
@@ -18,14 +20,12 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 
 class SignupAuthController extends Controller
 {
-    // use RegistersUsers;
 
-     /**
+   /**
      * Create a new controller instance.
      *
      * @return void
      */
-
 
     public function __construct(User $user, GuardProfile $guardProfile, PreferedLocation $preferedLocation, AddToWishlist $addToWishlist, GuardCancel $guardCancel)
     {
@@ -35,10 +35,16 @@ class SignupAuthController extends Controller
         $this->addToWishlist    = $addToWishlist;
         $this->guardCancel      = $guardCancel;
 
-        // $this->middleware('auth');
+        // $this->middleware('auth:User');
 
     }
 
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
      public function showData()
     {
         return redirect(route('home')); 
@@ -49,7 +55,8 @@ class SignupAuthController extends Controller
     {
             $data = $this->user
             ->where('userType', 1)
-            ->with('guardProfile')->get();
+            ->with('guardProfile')
+            ->with('preferedLocation')->paginate(6);
 
             $data2=$this->addToWishlist->get();
             $data3=$this->guardCancel->get();
@@ -68,6 +75,58 @@ class SignupAuthController extends Controller
                 return view('errorMessages.guardNotAvailable');
             }
     }
+
+
+    public function userWishlist(Request $request)
+    {
+
+
+        $wishlist= new UserWishlist;
+        $wishlist->user_id=Auth::user()->id;
+        $wishlist->guard_id=$request->guard_id;
+
+        $wishlist->save();
+
+        $guard_id=$request->guard_id;
+        $this->viewWishlist($guard_id);
+        return redirect()->back();
+    }
+
+    public function viewWishlist()
+    {
+        $guard = DB::table('wishlists')->get();
+       
+      // dd($guard);
+
+        // foreach ($guard as $value) {
+        //    dd($value); 
+        // }
+
+        $data = $this->user
+                   ->where('userType',1)
+                   ->with('guardProfile')
+                   ->with('preferedLocation')->get();
+
+                   $data2=$this->addToWishlist->get();
+                   $data3=$this->guardCancel->get();
+
+                   if (count($data)>0)
+                   {
+                   return view('wish.viewWishlist', [
+                           'data'  =>$data,
+                           'data2' =>$data2,
+                           'data3' =>$data3,
+                           'guard' =>$guard,
+
+                       ]);
+                   }
+                   else
+                   {
+                       return view('errorMessages.guardNotAvailable');
+                   }
+
+    }
+
 
 }
 

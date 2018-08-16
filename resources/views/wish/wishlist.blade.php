@@ -1,4 +1,4 @@
-@extends('layouts.app2')
+@extends('layouts.newLayout.homeLayout')
 @section('content')
 		
 		 @if(Session::has('wishlist'))

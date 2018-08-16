@@ -78,7 +78,9 @@ class LoginController extends Controller
                         return redirect(route('home'));                   
                 }
 
-        return redirect()->back()->withInput($request->only('email','remember'));
+        return redirect()->back()->withInput($request->only('email','remember'))->with('message', 'Email and password are incorrect');
+
+                // return back()->with('message', ' You entered wrong email and password');
     }
 
 }

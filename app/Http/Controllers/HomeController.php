@@ -50,7 +50,7 @@ class HomeController extends Controller
         $this->addToWishlist    = $addToWishlist;
         $this->guardCancel      = $guardCancel;
 
-         $this->middleware('auth');
+         // $this->middleware('auth:User');
     }
 
     /**

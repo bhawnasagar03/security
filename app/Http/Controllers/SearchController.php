@@ -45,7 +45,7 @@ class SearchController extends Controller
 
             if (count($data)>0)
             {
-                return view('layouts/headerFooter',[ 
+                return view('layouts/homeLayout',[ 
                     'data' => $data
                 ]);
             }
@@ -57,25 +57,32 @@ class SearchController extends Controller
 
       public function welcome()
       {
+       
         return view('welcome');
       }
 
      public function guardSearch(Request $request)
      {
-     	$loc=$request->loc;  	
-     	$jobType=$request->job;  	
+        $loc=$request->loc;
+        $job=$request->job;
+    
+        $data2=$this->addToWishlist->get();
+        $data3=$this->guardCancel->get();
 
-     	 $data = $this->user
-     	 	->where('id',$loc)
-     	 	->orwhere('id',$jobType)
-     	 	->with('GuardProfile')
-     	 	->with('PreferedLocation')->get();
-            // dd($data);
+           $data=User::whereHas('GuardProfile', function ($q) use ($job) {
+               $q->where('jobType', $job);
+           })->orwhereHas('PreferedLocation', function ($q) use ($loc) {
+               $q->where('loc1', $loc);
+           })->orwhereHas('PreferedLocation', function ($q) use ($loc) {
+               $q->where('loc2', $loc);
+           })->orwhereHas('PreferedLocation', function ($q) use ($loc) {
+               $q->where('loc3', $loc);
+           })->orwhereHas('PreferedLocation', function ($q) use ($loc) {
+               $q->where('loc4', $loc);
+           })->get();
 
-            $data2=$this->addToWishlist->get();
-            $data3=$this->guardCancel->get();
 
-            if (count($data)>0)
+             if (count($data)>0)
             {
                 return view('home', [
                     'data'  =>$data,
@@ -88,6 +95,7 @@ class SearchController extends Controller
             {
                return redirect(route('home'));
             }
-     }
+
+      }
 
 }

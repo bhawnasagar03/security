@@ -53,29 +53,10 @@ class RegisterController extends Controller
         $this->addToWishlist    = $addToWishlist;
         $this->guardCancel      = $guardCancel;
 
-         $this->middleware('guest:User', ['except' => 'logout']);
+         $this->middleware('guest:User');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    public function validation($request)
-    {
-        return $this->validate($request,[
-                    'fname'     => 'required|max:225',
-                    'lname'     => 'required|max:225',
-                    'email'     => 'required|email|unique:users|max:225',
-                    'password'  => 'required|confirmed|min:6',
-                    'date'      => 'required|date|max:225',
-                    'phone'     => 'required|max:10',
-                    'gender'    => 'required|max:225',
-                    'location'  => 'required|max:225',
-                ])->validate();
-    }
-
+    
     /**
      * Create a new user instance after a valid registration.
      *
@@ -84,100 +65,146 @@ class RegisterController extends Controller
      */
     public function registerUser(Request $request)
     {
-            $password       =$request->input('password');
-            $jobType        =$request->input('jobType');
-            $exProfession   =$request->input('exProfession');
-            $qualification  =$request->input('qualification');
-            $language       =$request->input('language');
-            $verifyToken    =str::random(40);
-            $loc1           =$request->input('loc1');
-            $loc2           =$request->input('loc2');
-            $loc3           =$request->input('loc3');
-            $loc4           =$request->input('loc4');
-      
 
-            $user=$this->user
-            ->create([
-                'fname'         =>   $request->has('fname')     ? $request->fname :     '',
-                'lname'         =>   $request->has('lname')     ? $request->lname :     '',
-                'email'         =>   $request->has('email')     ? $request->email :     '',
-                'password'      =>   bcrypt($password),
-                'date'          =>   $request->has('date')      ? $request->date :      '',
-                'phone'         =>   $request->has('phone')     ? $request->phone :     '',
-                'gender'        =>   $request->has('gender')    ? $request->gender :    '',
-                'location'      =>   $request->has('location')  ? $request->location :  '',
-                'verifyToken'   =>   $verifyToken,
-            ]);
+                $password       =$request->input('password');
+                $jobType        =$request->input('jobType');
+                $exProfession   =$request->input('exProfession');
+                $qualification  =$request->input('qualification');
+                $language       =$request->input('language');
+                $verifyToken    =str::random(40);
+                $loc1           =$request->input('loc1');
+                $loc2           =$request->input('loc2');
+                $loc3           =$request->input('loc3');
+                $loc4           =$request->input('loc4');
+            
 
-             if ($request->file('licence')!== null) 
-            {
-                    $doc = $request->licence;//User::Input('file');
+                $user=$this->user
+                ->create([
+                    'fname'         =>   $request->has('fname')     ? $request->fname :     '',
+                    'lname'         =>   $request->has('lname')     ? $request->lname :     '',
+                    'email'         =>   $request->has('email')     ? $request->email :     '',
+                    'password'      =>   bcrypt($password),
+                    'date'          =>   $request->has('date')      ? $request->date :      '',
+                    'phone'         =>   $request->has('phone')     ? $request->phone :     '',
+                    'gender'        =>   $request->has('gender')    ? $request->gender :    '',
+                    'location'      =>   $request->has('location')  ? $request->location :  '',
+                    'verifyToken'   =>   $verifyToken,
+                ]);
 
-                    $docName  = $doc->getClientOriginalName();
+                 if ($request->file('licence')!== null) 
+                {
+                        $doc = $request->licence;//User::Input('file');
 
-                    $docPath  = url('uploads/document/'.$docName);
+                        $docName  = $doc->getClientOriginalName();
 
-                    $destinationPath='uploads/document/';
+                        $docPath  = url('uploads/document/'.$docName);
 
-                    if ($doc->move($destinationPath,$docName)); {
-                            
-                            $request['image_path']=$docPath;
-                        }
+                        $destinationPath='uploads/document/';
 
-         
-            if ($request->file('image')!== null) 
-             {
-                     $file = $request->image;
-
-                     $imageName  = $file->getClientOriginalName();
-
-                     $imagePath  = url('uploads/user/'.$imageName);
-
-                     $destinationPath='uploads/user/';
-
-                     if ($file->move($destinationPath,$imageName)); {
-                             
-                             $request['image_path']=$imagePath;
-                         }
+                        if ($doc->move($destinationPath,$docName)); {
+                                
+                                $request['image_path']=$docPath;
+                            }
 
              
-            $guard=$this->guardProfile
-            ->create([
-                'user_id'        =>   $user->id,
-                'jobType'        =>   $jobType,
-                'exProfession'   =>   $exProfession,
-                'qualification'  =>   $qualification,
-                'language'       =>   $language,
-                'image'          =>   $imagePath,
-                'licence'        =>   $docPath,
-            ]);
-      
+                if ($request->file('image')!== null) 
+                 {
+                         $file = $request->image;
 
-            $loc=$this->preferedLocation
-            ->create([
-                'user_id'   =>   $user->id,
-                'guard_id'  =>   $guard->id,
-                'loc1'      =>   $loc1,
-                'loc2'      =>   $loc2,
-                'loc3'      =>   $loc3,
-                'loc4'      =>   $loc4,  
-            ]);
-             $thisUser=User::findOrFail($user->id);
-            $this->sendEmail($thisUser);
-            if($user)
-            {
-              User::where(['id'=>$guard->user_id])->update(['userType'=>1]);
-              return redirect(route('customerLogin'));  
+                         $imageName  = $file->getClientOriginalName();
+
+                         $imagePath  = url('uploads/user/'.$imageName);
+
+                         $destinationPath='uploads/user/';
+
+                         if ($file->move($destinationPath,$imageName)); {
+                                 
+                                 $request['image_path']=$imagePath;
+                             }
+
+                 
+                $guard=$this->guardProfile
+                ->create([
+                    'user_id'        =>   $user->id,
+                    'jobType'        =>   $jobType,
+                    'exProfession'   =>   $exProfession,
+                    'qualification'  =>   $qualification,
+                    'language'       =>   $language,
+                    'image'          =>   $imagePath,
+                    'licence'        =>   $docPath,
+                ]);
+            
+
+                $loc=$this->preferedLocation
+                ->create([
+                    'user_id'   =>   $user->id,
+                    'guard_id'  =>   $guard->id,
+                    'loc1'      =>   $loc1,
+                    'loc2'      =>   $loc2,
+                    'loc3'      =>   $loc3,
+                    'loc4'      =>   $loc4,  
+                ]);
+
+                $thisUser=User::findOrFail($user->id);
+                $this->sendEmail($thisUser);
+                $this->validation($request);
+                if($user)
+                {
+                  User::where(['id'=>$guard->user_id])->update(['userType'=>1]);
+                  return redirect(route('customerLogin'))->with('status', 'Dear Customer You successfully Registered, please login');  
+                }
+
+                
             }
-        }
-        }
-           
-            $thisUser=User::findOrFail($user->id);
-            $this->sendEmail($thisUser);
-            return redirect(route('customerLogin')); 
+            }
+                          
+                $thisUser=User::findOrFail($user->id);
+                $this->sendEmail($thisUser);
+
+                $this->validation($request);
+                return redirect(route('customerLogin'))->with('message', 'Dear Customer You successfully Registered, please login');;         
                       
     
 } 
+
+        /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    public function validation($request)
+    {
+        try {
+
+            return $this->validate($request,[
+                        'fname'         => 'required|max:225',
+                        'lname'         => 'required|max:225',
+                        //'email'         => 'required|string|email|max:255',
+                        'password'      => 'required|confirmed|min:6',
+                        'date'          => 'required|date|date|before:today',
+                        'phone'         => 'required|numeric|min:10',
+                        'gender'        => 'required|max:225',
+                        'location'      => 'required|max:225',
+                        // 'jobType'       => 'required|max:225',
+                        // 'exProfession'  => 'required|max:225',
+                        // 'qualification' => 'required|max:225',
+                        // 'language'      => 'required|max:225',
+                        // 'licence'       => 'required|max:225',
+                        // 'image'         => 'required|max:225',
+                        // 'loc1'          => 'required|max:225',
+                        // 'loc2'          => 'required|max:225',
+                        // 'loc3'          => 'required|max:225',
+                        // 'loc4'          => 'required|max:225',
+                    ]);
+            
+        } 
+        catch(Exception $ex) {
+            return response($ex->getMessage(), 400);
+          }
+        
+    }
+
 
 
         public function verifyEmailFirst()

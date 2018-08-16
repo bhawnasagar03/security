@@ -20,6 +20,7 @@ input::placeholder{
     opacity: 0.9;
     box-shadow: 1px 1px 5px #eaebed;
     border:1px solid #808080;
+    width: 50%
  }
 .panel-primary>.panel-heading
 {
@@ -28,6 +29,12 @@ input::placeholder{
     text-decoration: blink;
     text-align: center;
 }
+    .mypanel
+    {
+        border:none;
+        width: 100%;
+        margin: 0 auto;
+    }
 .login_section
 {
     background: url('../public/images/wallpaper2.jpg') 100%;

@@ -3,7 +3,7 @@
 
 Dear User you recently cancel your guard booking.
 
-@component('mail::button', ['url' => URL::route('customerLogin')])
+@component('mail::button', ['url' => URL::route('home')])
 View Cancelation
 @endcomponent
 

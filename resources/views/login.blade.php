@@ -1,37 +1,46 @@
-@extends('layouts.app2')
+@extends('layouts.emailRegstration')
 @section('content')
-	<section id="login_section">
-
-        <div class="panel panel-primary mypanel signpanel">
-       
-            <div class="panel-heading heading">
-                <h1>Login page</h1>
-            </div>
-            <div class="panel-body">
-                <form action="{{route('customerLogin')}}" method="post">
-                {{csrf_field()}}                            
-                           <div class="form-group col-md-12 >
-                                <div class="input-group">
-                                <input title="suggestion" autocomplete="off" type="text" value="{{old('email')}}" name="email" id="email" class="form-control" placeholder="Enter email">
-                            </div>
-                       <div class="form-group col-md-12">
-                        <input type="password" autocomplete="off" name="password" id="pas" class="form-control" placeholder="Enter password">
-                        </div>
-                    <div class="form-group col-md-12 policy">
-                        <p>Not Register yet<a href="{{route('signupSelection')}}" id="loginbtn">Register Here</a> </p>
-                        <a class="btn btn-link" href="{{ route('user.password.request') }}">
-                                    {{ __('Forgot Your Password?') }}
-                                </a>
-                    </div>
-                    <div class="form-group col-md-12">
-                            <button type="submit" id="sub" class="btn btn-primary btn-block" name="submit">Login</button>
-
-                    </div>
-                </form>
-
-            </div>
-            <!--end of panel body-->
+<div class="login-wrap">
+    <div class="login-content">
+        @if(session()->has('message'))
+        <div class="alert alert-warning">
+            {{ session()->get('message') }}
         </div>
-        <!--end of panel-->
-    </section>
+        @endif
+        <div class="login-logo" style="border-radius: 50%;">
+            <a href="{{route('welcome')}}"><img src="img/seclogo.png" alt="logo" title="" height="50px" width="50px" style="border-radius: 50%;" /></a>
+        </div>
+        <div class="login-form">
+            <form action="{{route('customerLogin')}}" method="post">
+                {{csrf_field()}}
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input class="au-input au-input--full form-control" type="email" name="email" id="email" value="{{old('email')}}" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input class="au-input au-input--full form-control" type="password" name="password" id="pas" placeholder="Password">
+                </div>
+                <div class="login-checkbox">
+                    <label>
+                    <input type="checkbox" name="remember">Remember Me
+                    </label>
+                    <label>
+                    <a class="btn btn-link" href="{{ route('user.password.request') }}">
+                    {{ __('Forgot Password?') }}
+                    </a>
+                    </label>
+                </div>
+                <button type="submit" id="sub" class="au-btn au-btn--block au-btn--green m-b-20" name="submit">Login</button>
+            </form>
+            <div class="register-link">
+                <p>
+                    Don't you have account?
+                    <a href="{{route('signupSelection')}}" id="loginbtn">Register Here</a>/
+                    <a href="{{ route('welcome') }}">Home</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

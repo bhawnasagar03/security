@@ -4,7 +4,7 @@
 Dear Guard now you will get a new job soon 
 Have a nice day.
 
-@component('mail::button', ['url' => URL::route('customerLogin')])
+@component('mail::button', ['url' => URL::route('home')])
 View Cancelation
 @endcomponent
 
